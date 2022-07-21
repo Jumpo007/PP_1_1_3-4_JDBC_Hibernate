@@ -16,7 +16,11 @@ public class Main {
         UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
         User user = new User();
         Util.getConnection();
+        userDaoJDBC.createUsersTable();
+//        userDaoJDBC.saveUser('Habib', 'Maga', (byte) 31);
+        userDaoJDBC.saveUser("Ben", "Aflek", (byte) 31);
         System.out.println(userDaoJDBC.getAllUsers());
+
 
 
 
