@@ -7,19 +7,30 @@ import jm.task.core.jdbc.util.Util;
 
 import java.sql.Connection;
 import java.sql.Driver;
+import java.sql.SQLException;
 import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
-        UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
-        User user = new User();
         Util.getConnection();
-        userDaoJDBC.createUsersTable();
-//        userDaoJDBC.saveUser('Habib', 'Maga', (byte) 31);
-        userDaoJDBC.saveUser("Ben", "Aflek", (byte) 31);
-        System.out.println(userDaoJDBC.getAllUsers());
+        UserDao userDao = new UserDaoJDBCImpl();
+
+        userDao.createUsersTable();
+
+        userDao.saveUser("Name1", "LastName1", (byte) 20);
+        userDao.saveUser("Name2", "LastName2", (byte) 25);
+        userDao.saveUser("Name3", "LastName3", (byte) 31);
+        userDao.saveUser("Name4", "LastName4", (byte) 38);
+
+        userDao.removeUserById(1);
+        List<User> user = userDao.getAllUsers();
+        for (User users : user) {
+            System.out.println(users);
+        }
+//        userDao.cleanUsersTable();
+//        userDao.dropUsersTable();
 
 
 
