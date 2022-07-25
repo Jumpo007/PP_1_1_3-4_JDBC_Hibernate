@@ -29,6 +29,7 @@ public class Main {
         for (User users : user) {
             System.out.println(users);
         }
+
 //        userDao.cleanUsersTable();
 //        userDao.dropUsersTable();
 
