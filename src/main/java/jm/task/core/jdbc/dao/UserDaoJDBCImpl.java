@@ -45,7 +45,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try (PreparedStatement statement = CONNECTION.prepareStatement(ADD_USER)) {
-            CONNECTION.setAutoCommit(false);
             statement.setString(1, name);
             statement.setString(2, lastName);
             statement.setByte(3, age);
@@ -63,7 +62,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(DELETE_USER)) {
-            CONNECTION.setAutoCommit(false);
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -95,7 +93,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try (Statement statement = CONNECTION.createStatement()) {
-            CONNECTION.setAutoCommit(false);
             statement.execute(CLEAN_TABLE);
         } catch (SQLException e) {
             try {
