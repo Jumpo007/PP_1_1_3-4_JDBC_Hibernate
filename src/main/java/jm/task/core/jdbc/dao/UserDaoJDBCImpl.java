@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private final Connection CONNECTION = Util.getConnection();
+    private static final Connection CONNECTION = Util.getConnection();
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS user1";
     private static final String CREATE_TABLE = ("CREATE TABLE IF NOT EXISTS user1" +
             "(id mediumint not null auto_increment," +
@@ -28,42 +28,18 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try (Statement statement = CONNECTION.createStatement()) {
-            CONNECTION.setAutoCommit(false);
             statement.execute(CREATE_TABLE);
             CONNECTION.commit();
-        } catch (SQLException e) {
-            try {
-                CONNECTION.rollback();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                CONNECTION.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
     public void dropUsersTable() {
         try (Statement statement = CONNECTION.createStatement()) {
             statement.executeUpdate(DROP_TABLE);
-            CONNECTION.setAutoCommit(false);
-        } catch (SQLException e) {
-            try {
-                CONNECTION.rollback();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                CONNECTION.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -82,12 +58,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 throw new RuntimeException(ex);
             }
             e.printStackTrace();
-        } finally {
-            try {
-                CONNECTION.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -103,12 +73,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 throw new RuntimeException(ex);
             }
             e.printStackTrace();
-        } finally {
-            try {
-                CONNECTION.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -133,7 +97,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = CONNECTION.createStatement()) {
             CONNECTION.setAutoCommit(false);
             statement.execute(CLEAN_TABLE);
-
         } catch (SQLException e) {
             try {
                 CONNECTION.rollback();
@@ -141,12 +104,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 throw new RuntimeException(ex);
             }
             e.printStackTrace();
-        } finally {
-            try {
-                CONNECTION.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 }
